@@ -3,6 +3,7 @@ from datetime import timedelta
 import json
 import os
 import boto3
+from botocore.exceptions import ClientError
 import logging
 
 class DateManual:
@@ -85,7 +86,10 @@ class FileProcess:
             json.dump(data,f)
                     
     def write_S3(self):
-       s3 = boto3.client('s3') 
-       s3.upload_file(f'/tmp/{self.json_str}','yt-channel-comments',self.json_str)
-       self.logger.info('into S3!')
+        try:
+           s3 = boto3.client('s3') 
+           s3.upload_file(f'/tmp/{self.json_str}','yt-channel-comments',self.json_str)
+           self.logger.info('into S3!')
+        except ClientError as e:
+           self.logger.error(e)
        
