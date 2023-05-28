@@ -21,7 +21,7 @@ class DateManual:
 
 class DateAuto:
 
-    def __init__(self,date_unit=str,date_back=int) -> None:
+    def __init__(self,date_unit:str,date_back:int) -> None:
         self.date_unit = date_unit.lower()
         self.date_back = date_back
         self.days_delta = timedelta(days=date_back)
@@ -31,24 +31,24 @@ class DateAuto:
         self.start_day_date = self.end_date-self.days_delta
         self.start_week_date = self.end_date-self.weeks_delta
 
-    def date_to_str(self,for_json=bool):
+    def date_to_json_str(self,for_raw_data:bool,channel_name:str):
         start_day_date = datetime.strftime(self.start_day_date,self.str_format)
         start_week_date = datetime.strftime(self.start_week_date,self.str_format)
         end_date =  datetime.strftime(self.end_date,self.str_format)
         if self.date_unit == 'days':
-            if for_json is True:
-                return f'{start_day_date}-{end_date}.json'
+            if for_raw_data is True:
+                return f'{channel_name}_raw_{start_day_date}-{end_date}.json'
             else:
-                return f'{start_day_date}-{end_date}'
+                return f'{channel_name}_spacy_{start_day_date}-{end_date}.json'
         if self.date_unit == 'weeks':
-            if for_json is True:
-                return f'{start_week_date}-{end_date}.json'
+            if for_raw_data is True:
+                return f'{channel_name}_raw_{start_week_date}-{end_date}.json'
             else:
-                return f'{start_week_date}-{end_date}'
+                return f'{channel_name}_spacy_{start_week_date}-{end_date}'
 
 class DateAutoVideo:
 
-    def __init__(self,published_date) -> None:
+    def __init__(self,published_date:datetime) -> None:
         self.today = datetime.now()
         self.published_date = datetime.strptime(published_date,'%Y-%m-%dT%H:%M:%SZ').date()
         self.str_format = '%m.%d.%Y'
@@ -60,9 +60,10 @@ class DateAutoVideo:
 
 class FileProcess:
 
-    def __init__(self,json_str=str) -> None:
+    def __init__(self,json_str:str) -> None:
         self.json_str=json_str
-        self.logger = logging.getLogger()
+        self.logger=logging.getLogger()
+        self.file_path='/tmp' 
 
     def open_json(self,return_metadata=bool) -> json:
         with open(self.json_str) as f:
@@ -80,17 +81,21 @@ class FileProcess:
             return json_file
              
     def write_json(self,data) -> json:
-        file_path = f'/tmp'
-        os.makedirs(file_path,exist_ok=True)
-        with open(os.path.join(file_path,self.json_str),'w') as f:
+        os.makedirs(self.file_path,exist_ok=True)
+        with open(os.path.join(self.file_path,self.json_str),'w') as f:
             json.dump(data,f)
                     
     def write_S3(self):
         try:
            s3 = boto3.client('s3') 
-           s3.upload_file(f'/tmp/{self.json_str}','yt-channel-comments',self.json_str)
+           s3.upload_file(f'{self.file_path}/{self.json_str}','yt-channel-comments',self.json_str)
            self.logger.setLevel('INFO')
            self.logger.info('into S3!')
         except ClientError as e:
            self.logger.error(e)
-       
+    
+    def open_S3_recent(self):
+        pass
+
+    def open_S3_string(self):
+        pass
