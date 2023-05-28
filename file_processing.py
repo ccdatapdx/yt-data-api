@@ -89,7 +89,7 @@ class FileProcess:
         try:
            s3 = boto3.client('s3') 
            s3.upload_file(f'/tmp/{self.json_str}','yt-channel-comments',self.json_str)
-           self.logger.setLevel(logging.info)
+           self.logger.setLevel('INFO')
            self.logger.info('into S3!')
         except ClientError as e:
            self.logger.error(e)
