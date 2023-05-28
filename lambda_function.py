@@ -2,6 +2,11 @@ from file_processing import DateAuto,FileProcess
 from yt_comments import YouTubeComments
 import os
 
+date_unit = os.environ['date_unit']
+date_back = os.environ['date_back']
+channel_id = os.environ['channel_id']
+channel_name = os.environ['channel_name']
+
 def main_api_data(date_unit:str,date_back:str,channel_name:str,channel_id:str):
     date_auto = DateAuto(date_unit,int(date_back))
     json_str = date_auto.date_to_json_str(channel_name,for_raw_data=True)
@@ -13,10 +18,6 @@ def main_api_data(date_unit:str,date_back:str,channel_name:str,channel_id:str):
     file_processing.write_json(data)
     file_processing.write_S3()
     
-date_unit = os.environ['date_unit']
-date_back = os.environ['date_back']
-channel_id = os.environ['channel_id']
-channel_name = os.environ['channel_name']
 
 def lambda_handler(event,context):
      event = main_api_data(date_unit,date_back,channel_name,channel_id)

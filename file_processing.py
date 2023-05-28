@@ -31,7 +31,7 @@ class DateAuto:
         self.start_day_date = self.end_date-self.days_delta
         self.start_week_date = self.end_date-self.weeks_delta
 
-    def date_to_json_str(self,for_raw_data:bool,channel_name:str):
+    def date_to_json_str(self,channel_name:str,for_raw_data:bool):
         start_day_date = datetime.strftime(self.start_day_date,self.str_format)
         start_week_date = datetime.strftime(self.start_week_date,self.str_format)
         end_date =  datetime.strftime(self.end_date,self.str_format)
