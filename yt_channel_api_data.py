@@ -64,3 +64,4 @@ class YouTubeData:
             error_reason = e.error_details[0]['reason']
             error_log_str = f'{e.status_code},{videoId},{error_reason}'
             self.logger.error(error_log_str)
+            
