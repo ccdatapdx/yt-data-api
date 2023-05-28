@@ -3,6 +3,7 @@ from datetime import timedelta
 import json
 import os
 import boto3
+import logging
 
 class DateManual:
 
@@ -60,6 +61,7 @@ class FileProcess:
 
     def __init__(self,json_str=str) -> None:
         self.json_str=json_str
+        self.logger = logging.getLogger()
 
     def open_json(self,return_metadata=bool) -> json:
         with open(self.json_str) as f:
@@ -85,4 +87,5 @@ class FileProcess:
     def write_S3(self):
        s3 = boto3.client('s3') 
        s3.upload_file(f'/tmp/{self.json_str}','yt-channel-comments',self.json_str)
+       self.logger.info('into S3!')
        
