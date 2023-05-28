@@ -5,7 +5,7 @@ on:
 jobs:
    deploy-yt-data-api:
        name: deploy
-       if: github.ref == 'refs/heads/main'
+       if: github.ref == 'refs/heads/master'
        runs-on: ubuntu-latest
        steps:
            - name: checkout code
