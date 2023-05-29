@@ -19,6 +19,6 @@ def main_api_data(date_unit:str,date_back:str,channel_name:str,channel_id:str):
     file_processing.write_S3()
     
 
-def lambda_handler(event):
+def lambda_handler(event,context):
      event = main_api_data(date_unit,date_back,channel_name,channel_id)
      return event
