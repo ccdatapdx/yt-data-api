@@ -63,7 +63,7 @@ class FileProcess:
     def __init__(self,json_str:str) -> None:
         self.json_str=json_str
         self.logger=logging.getLogger()
-        self.file_path='/tmp' 
+        self.file_path='/tmp'
 
     def open_json(self,return_metadata=bool) -> json:
         with open(self.json_str) as f:
@@ -93,9 +93,3 @@ class FileProcess:
            self.logger.info('into S3!')
         except ClientError as e:
            self.logger.error(e)
-    
-    def open_S3_recent(self):
-        pass
-
-    def open_S3_string(self):
-        pass
