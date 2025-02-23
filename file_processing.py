@@ -1,5 +1,5 @@
 from datetime import datetime
-from datetime import timedelta
+from datetime import timedelta, timezone
 import json
 import os
 import boto3
@@ -26,7 +26,7 @@ class DateAuto:
         self.date_back = date_back
         self.days_delta = timedelta(days=date_back)
         self.weeks_delta = timedelta(weeks=date_back)
-        self.end_date = datetime.now()
+        self.end_date = datetime.now(tz=timezone.utc)
         self.str_format = '%m.%d.%Y'
         self.start_day_date = self.end_date-self.days_delta
         self.start_week_date = self.end_date-self.weeks_delta

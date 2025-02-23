@@ -2,15 +2,11 @@ from file_processing import DateAuto,FileProcess
 from yt_comments import YouTubeComments
 import os
 
-#date_unit = os.environ['date_unit']
-#date_back = os.environ['date_back']
-#channel_id = os.environ['channel_id']
-#channel_name = os.environ['channel_name']
+date_unit = os.environ['date_unit']
+date_back = os.environ['date_back']
+channel_id = os.environ['channel_id']
+channel_name = os.environ['channel_name']
 
-date_unit = 'days'
-date_back = 7
-channel_id = 'UCXuqSBlHAE6Xw-yeJA0Tunw'
-channel_name = 'Linus Tech Tips'
 
 def main_api_data(date_unit:str,date_back:str,channel_name:str,channel_id:str):
     date_auto = DateAuto(date_unit,int(date_back))

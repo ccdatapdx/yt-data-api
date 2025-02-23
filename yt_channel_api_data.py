@@ -41,8 +41,10 @@ class YouTubeData:
                             part='snippet',
                             type='video',
                             maxResults=50,
-                            publishedBefore=date_before.isoformat("T") + "Z",
-                            publishedAfter=date_after.isoformat("T") + "Z",
+                            publishedBefore=date_before.isoformat(sep="T",timespec='seconds'
+                                                                 ).replace('+00:00','Z'),
+                            publishedAfter=date_after.isoformat(sep="T",timespec='seconds'
+                                                                ).replace('+00:00','Z'),
                             order='date'
                         ).execute()
             result = result.get('items', [])
