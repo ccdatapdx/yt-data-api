@@ -34,15 +34,13 @@ class YouTubeData:
             error_log_str = f'{e.status_code},{videoId},{error_reason}'
             self.logger.error(error_log_str)
            
-    def list_channel_videoId(self,channelId:str,date_before:datetime,date_after:datetime):
+    def list_channel_videoId(self,channelId:str,date_after:datetime):
         try:
             result = self.youtube_search.list(
                             channelId=channelId,
                             part='snippet',
                             type='video',
                             maxResults=50,
-                            publishedBefore=date_before.isoformat(sep="T",timespec='seconds'
-                                                                 ).replace('+00:00','Z'),
                             publishedAfter=date_after.isoformat(sep="T",timespec='seconds'
                                                                 ).replace('+00:00','Z'),
                             order='date'

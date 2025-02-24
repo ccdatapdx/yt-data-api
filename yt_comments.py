@@ -30,7 +30,6 @@ class YouTubeComments:
 
     def get_channel_ids(self)->list:
         results = YouTubeData('youtube','v3').list_channel_videoId(self.channel_id,
-                                                                   self.date_before,
                                                                    self.date_after)
         for result in results:
             if result['snippet']['liveBroadcastContent'] == 'live':
